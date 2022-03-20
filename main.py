@@ -13,5 +13,5 @@ c = state.State(1, 2, 1, 1)
 d = state.State(5, 5, 5, 5)
 print(state.isClosed(a, x), state.isClosed(b, x), state.isLegal(c), state.isLegal(d))
 print(state.isLegal(a))
-
 print(123)
+print(322)
