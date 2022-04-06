@@ -1,47 +1,70 @@
-M = 3  #Total number of Misionaries
-C = 3  #Total number of Cannibals
+M = 3  # Total number of Missionaries
+C = 3  # Total number of Cannibals
 
-#State (Misionaries, Cannibals, BoatA, BoatB)
+# State (Missionaries, Cannibals, BoatA, BoatB)
 class State:
-    def __init__(self, m, c, a, b):
-        self.m = m  #The number of Misionaries on the right side
-        self.c = c  #The number of Cannibals on the right side
+    def __init__(self, m, c, a, b, g, h):
+        self.m = m  # The number of Missionaries on the right side
+        self.c = c  # The number of Cannibals on the right side
         self.a = a  # a = 1: BoatA on the right side; a = 0: BoatA on the left side
         self.b = b  # b = 1: BoatB on the right side; b = 0: BoatB on the left side
+        self.num = 0
         self.parent = None
-        self.node = [m, c, a, b]
-
+        self.g = g                      # g(x)
+        self.h = h                      # h(x)
+        self.cost = self.g + self.h     # f(x)
+        self.boat = BoatState(0, 0, 0, 0)
+    def display(self):
+        print(self.m, " ", self.c, " ", self.a, " ", self.b, " ", self.num, " ", self.parent, " ", self.boat.node)
 
 class BoatState:
     def __init__(self, am, ac, bm, bc):
-        self.am = am  #The number of Misionaries on BoatA
-        self.ac = ac  #The number of Cannibals on BoatA
-        self.bm = bm  #The number of Misionaries on BoatB
-        self.bc = bc  #The number of Cannibals on BoatB
-        self.parent = None
+        self.am = am  # The number of Missionaries on BoatA
+        self.ac = ac  # The number of Cannibals on BoatA
+        self.bm = bm  # The number of Missionaries on BoatB
+        self.bc = bc  # The number of Cannibals on BoatB
         self.node = [am, ac, bm, bc]
 
-#Dtermine whether the state reach the goal
+# Determine whether the state reach the goal
 def isGoal(x):
     if x.m == 0 and x.c == 0 and (x.a == 0 or x.b == 0):
         return True
     else:
         return False
 
-#Determine whether the state is in the Closed List
-def isClosed(x, closed):
-    for e in closed:
+# Determine whether the state is in the Open List
+def inOpen(x, open):
+    for e in open:
         if x.m == e.m and x.c == e.c and x.a == e.a and x.b == e.b:
             return True
     return False
 
-#Determine whether the state is legal
-def isLegal(x):
-    if x.m >= 0 and x.m <= M and x.c >=0 and x.c <= C:
-        if x.c > x.m:
-            return False
-        else:
-            return True
-    else:
-        return False
+# Determine whether the state is legal
+def isLegal(bank, boat):
+    flag1 = flag2 = flag3 =  False
+    if bank.m >= 0 and bank.m <= M and bank.c >= 0 and bank.c <= C:
+        if bank.m == 0 or bank.m >= bank.c:
+            flag1 = True
 
+    if boat.am >= boat.ac and boat.bm >= boat.bc:
+        flag2 = True
+
+    if M - bank.m >= C - bank.c:
+        flag3 = True
+
+    return flag1 and flag2 and flag3
+
+# conclude the closed_list to result
+def showResult(list):
+    result = []
+    temp = list[-1]
+    result.append(temp)
+    while True:
+        for e in list:
+            if e.num == temp.parent:
+                temp = e
+                break
+        result.append(temp)
+        if temp.num == 0:
+            break
+    return result
