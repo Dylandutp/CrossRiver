@@ -167,7 +167,7 @@ open_list = []
 closed_list = []
 result = False
 
-init = state.State(3, 3, True, True, 0, 0)
+init = state.State(state.M, state.C, True, True, 0, 0)
 goal = state.State(0, 0, False, False, 0, 0)       # the last four elements 0 are not important
 
 open_list.append(init)
@@ -200,13 +200,12 @@ while(len(open_list) != 0):
 if result == True:
     print("The condition has solution.")
     print("Cost = ", closed_list[-1].cost)
-    result = state.showResult(closed_list)
+    answer = state.showResult(closed_list)
+    for e in closed_list:
+        e.display()
+    print("-" * 50)
+    for e in answer:
+        e.display()
 else:
     print("The condition doesn't have a solution.")
 
-for e in closed_list:
-    e.display()
-
-print("-" * 50)
-for e in result:
-    e.display()
