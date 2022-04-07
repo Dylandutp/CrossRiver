@@ -54,6 +54,10 @@ def isLegal(bank, boat):
 
     return flag1 and flag2 and flag3
 
+# Heuristic funtion
+def h(s):
+    return s.m + s.c - 2 * a - 3 * b
+
 # conclude the closed_list to result
 def showResult(list):
     result = []
