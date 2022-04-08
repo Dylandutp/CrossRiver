@@ -1,18 +1,18 @@
-M = 4 # Total number of Missionaries
+M = 4  # Total number of Missionaries
 C = 4  # Total number of Cannibals
 
 # State (Missionaries, Cannibals, BoatA, BoatB)
 class State:
-    def __init__(self, m, c, a, b, g, h):
+    def __init__(self, m, c, a, b):
         self.m = m  # The number of Missionaries on the right side
         self.c = c  # The number of Cannibals on the right side
         self.a = a  # a = 1: BoatA on the right side; a = 0: BoatA on the left side
         self.b = b  # b = 1: BoatB on the right side; b = 0: BoatB on the left side
         self.num = 0
         self.parent = None
-        self.g = g                      # g(x)
-        self.h = h                      # h(x)
-        self.cost = self.g + self.h     # f(x)
+        self.g = 0                      # g(x)
+        self.h = 0                      # h(x)
+        self.f = self.g + self.h  # f(x) = g(x) + h(x)
         self.boat = BoatState(0, 0, 0, 0)
     def display(self):
         print(self.m, " ", self.c, " ", self.a, " ", self.b, " ", self.num, " ", self.parent, " ", self.boat.node)
@@ -56,7 +56,8 @@ def isLegal(bank, boat):
 
 # Heuristic funtion
 def h(s):
-    return s.m + s.c - 2 * a - 3 * b
+    return s.m + s.c - 2 * s.a - 3 * s.b
+    # return 0
 
 # conclude the closed_list to result
 def showResult(list):
