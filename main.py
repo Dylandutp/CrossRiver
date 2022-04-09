@@ -1,3 +1,5 @@
+import logging
+import os
 import state 
 
 A = 2  # Capacity of BoatA
@@ -7,6 +9,17 @@ B_COST = 1 # Cost of BoatB
 AB_COST = 1  # Cost of BoatA + BoatB
 number = 1
 
+# Build log file
+filename = f'{state.M}-{state.C}.log'
+if os.path.isfile(filename):
+    os.remove(filename)
+log = logging.getLogger()
+
+handler = logging.FileHandler(filename = filename) 
+log.addHandler(handler)
+log.setLevel(logging.DEBUG)
+
+# Expand node
 def addChild(list, current):
     global number
     # when both boat are on the right bank
@@ -205,6 +218,7 @@ def addChild(list, current):
                             next_state.boat = boat_state
                             list.append(next_state)
 
+
 open_list = []
 closed_list = []
 result = False
@@ -238,6 +252,13 @@ while(len(open_list) != 0):
     
     open_list = sorted(open_list, key = lambda x: x.h)
     open_list = sorted(open_list, key = lambda x: x.f)
+    log.debug("OpenList:")
+    for e in open_list:
+        log.debug(f"{e.num: <5} -> [{e.m},{e.c},{e.a},{e.b}], Parent={e.parent}")
+    log.debug("ClosedList:")   
+    for e in closed_list:
+        log.debug(f"{e.num: <5} -> [{e.m},{e.c},{e.a},{e.b}], Parent={e.parent}")
+    log.debug("")
 
 if result == True:
     print("The condition has solution.")
@@ -247,7 +268,11 @@ if result == True:
         e.display()
     print("-" * 50)
     answer = reversed(answer)
+    log.debug("Solution:")
     for e in answer:
+        if e.parent != None:
+            log.debug(f"[{e.boat.am},{e.boat.ac},{e.boat.bm},{e.boat.bc}]") 
+        log.debug(f"{e.num: <5} -> [{e.m},{e.c},{e.a},{e.b}]")
         e.display()
 else:
     print("The condition doesn't have a solutiion.")
