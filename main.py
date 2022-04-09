@@ -4,9 +4,9 @@ import state
 
 A = 2  # Capacity of BoatA
 B = 3  # Capacity of BoatB
-A_COST = 1 # Cost of BoatA
-B_COST = 1 # Cost of BoatB
-AB_COST = 1  # Cost of BoatA + BoatB
+A_COST = 3 # Cost of BoatA
+B_COST = 25 # Cost of BoatB
+AB_COST = 28  # Cost of BoatA + BoatB
 number = 1
 
 # Build log file
@@ -252,6 +252,7 @@ while(len(open_list) != 0):
     
     open_list = sorted(open_list, key = lambda x: x.h)
     open_list = sorted(open_list, key = lambda x: x.f)
+    # write log file
     log.debug("OpenList:")
     for e in open_list:
         log.debug(f"{e.num: <5} -> [{e.m},{e.c},{e.a},{e.b}], Parent={e.parent}")
@@ -268,7 +269,8 @@ if result == True:
         e.display()
     print("-" * 50)
     answer = reversed(answer)
-    log.debug("Solution:")
+    # write log file
+    log.debug(f"Solution (Cost = {closed_list[-1].g}) :")
     for e in answer:
         if e.parent != None:
             log.debug(f"[{e.boat.am},{e.boat.ac},{e.boat.bm},{e.boat.bc}]") 
