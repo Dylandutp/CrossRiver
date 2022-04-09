@@ -2,6 +2,9 @@ import state
 
 A = 2  # Capacity of BoatA
 B = 3  # Capacity of BoatB
+A_COST = 1 # Cost of BoatA
+B_COST = 1 # Cost of BoatB
+AB_COST = 1  # Cost of BoatA + BoatB
 number = 1
 
 def addChild(list, current):
@@ -12,7 +15,7 @@ def addChild(list, current):
         for a1 in range(1, A + 1):
             for a2 in range(0, a1 + 1):
                 next_state = state.State(current.m - a2, current.c - (a1 - a2), not current.a, current.b)
-                next_state.g = current.g + 3
+                next_state.g = current.g + A_COST
                 next_state.h = state.h(next_state)
                 next_state.f = next_state.g + next_state.h
                 boat_state = state.BoatState(a2, a1 - a2, 0, 0)
@@ -27,7 +30,7 @@ def addChild(list, current):
         for b1 in range(1, B + 1):
             for b2 in range(0, b1 + 1):
                 next_state = state.State(current.m - b2, current.c - (b1 - b2), current.a, not current.b)
-                next_state.g = current.g + 25
+                next_state.g = current.g + B_COST
                 next_state.h = state.h(next_state)
                 next_state.f = next_state.g + next_state.h
                 boat_state = state.BoatState(0, 0, b2, b1 - b2)
@@ -44,7 +47,7 @@ def addChild(list, current):
                 for b1 in range(1, B + 1):
                     for b2 in range(0, b2 + 1):
                         next_state = state.State(current.m - a2 - b2, current.c - (a1 - a2) - (b1 - b2), not current.a, not current.b)
-                        next_state.g = current.g + 28
+                        next_state.g = current.g + AB_COST
                         next_state.h = state.h(next_state)
                         next_state.f = next_state.g + next_state.h
                         boat_state = state.BoatState(a2, a1 - a2, b2, b1 - b2)
@@ -61,7 +64,7 @@ def addChild(list, current):
         for a1 in range(1, A + 1):
             for a2 in range(0, a1 + 1):
                 next_state = state.State(current.m - a2, current.c - (a1 - a2), not current.a, current.b)
-                next_state.g = current.g + 3
+                next_state.g = current.g + A_COST
                 next_state.h = state.h(next_state)
                 next_state.f = next_state.g + next_state.h
                 boat_state = state.BoatState(a2, a1 - a2, 0, 0)
@@ -76,7 +79,7 @@ def addChild(list, current):
         for b1 in range(1, B + 1):
             for b2 in range(0, b1 + 1):
                 next_state = state.State(current.m + b2, current.c + (b1 - b2), current.a, not current.b)
-                next_state.g = current.g + 25
+                next_state.g = current.g + B_COST
                 next_state.h = state.h(next_state)
                 next_state.f = next_state.g + next_state.h
                 boat_state = state.BoatState(0, 0, b2, b1 - b2)
@@ -93,7 +96,7 @@ def addChild(list, current):
                 for b1 in range(1, B + 1):
                     for b2 in range(0, b2 + 1):
                         next_state = state.State(current.m - a2 + b2, current.c - (a1 - a2) + (b1 - b2), not current.a, not current.b)
-                        next_state.g = current.g + 28
+                        next_state.g = current.g + AB_COST
                         next_state.h = state.h(next_state)
                         next_state.f = next_state.g + next_state.h
                         boat_state = state.BoatState(a2, a1 - a2, b2, b1 - b2)
@@ -110,7 +113,7 @@ def addChild(list, current):
         for a1 in range(1, A + 1):
             for a2 in range(0, a1 + 1):
                 next_state = state.State(current.m + a2, current.c + (a1 - a2), not current.a, current.b)
-                next_state.g = current.g + 3
+                next_state.g = current.g + A_COST
                 next_state.h = state.h(next_state)
                 next_state.f = next_state.g + next_state.h
                 boat_state = state.BoatState(a2, a1 - a2, 0, 0)
@@ -125,7 +128,7 @@ def addChild(list, current):
         for b1 in range(1, B + 1):
             for b2 in range(0, b1 + 1):
                 next_state = state.State(current.m - b2, current.c - (b1 - b2), current.a, not current.b)
-                next_state.g = current.g + 25
+                next_state.g = current.g + B_COST
                 next_state.h = state.h(next_state)
                 next_state.f = next_state.g + next_state.h
                 boat_state = state.BoatState(0, 0, b2, b1 - b2)
@@ -142,7 +145,7 @@ def addChild(list, current):
                 for b1 in range(1, B + 1):
                     for b2 in range(0, b2 + 1):
                         next_state = state.State(current.m + a2 - b2, current.c + (a1 - a2) - (b1 - b2), not current.a, not current.b)
-                        next_state.g = current.g + 28
+                        next_state.g = current.g + AB_COST
                         next_state.h = state.h(next_state)
                         next_state.f = next_state.g + next_state.h
                         boat_state = state.BoatState(a2, a1 - a2, b2, b1 - b2)
@@ -159,7 +162,7 @@ def addChild(list, current):
         for a1 in range(1, A + 1):
             for a2 in range(0, a1):
                 next_state = state.State(current.m + a2, current.c + (a1 - a2), not current.a, current.b)
-                next_state.g = current.g + 3
+                next_state.g = current.g + A_COST
                 next_state.h = state.h(next_state)
                 next_state.f = next_state.g + next_state.h
                 boat_state = state.BoatState(a2, a1 - a2, 0, 0)
@@ -174,7 +177,7 @@ def addChild(list, current):
         for b1 in range(1, B + 1):
             for b2 in range(0, b1):
                 next_state = state.State(current.m + b2, current.c + (b1 - b2), current.a, not current.b)
-                next_state.g += current.g + 25 
+                next_state.g += current.g + B_COST 
                 next_state.h = state.h(next_state)
                 next_state.f = next_state.g + next_state.h
                 boat_state = state.BoatState(0, 0, b2, b1 - b2)
@@ -191,7 +194,7 @@ def addChild(list, current):
                 for b1 in range(1, B + 1):
                     for b2 in range(0, b2 + 1):
                         next_state = state.State(current.m + a2 + b2, current.c + (a1 - a2) + (b1 - b2), not current.a, not current.b)
-                        next_state.g = current.g + 28
+                        next_state.g = current.g + AB_COST
                         next_state.h = state.h(next_state)
                         next_state.f = next_state.g + next_state.h
                         boat_state = state.BoatState(a2, a1 - a2, b2, b1 - b2)
