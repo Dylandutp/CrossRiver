@@ -1,6 +1,7 @@
 import heapq
 import queue
-import state 
+import state
+import sys
 
 number = 1
 def addChild(list, current):
@@ -174,6 +175,10 @@ goal = state.State(0, 0, False, False, 0, 0)       # the last four elements 0 ar
 
 open_list.append(init)
 
+if (not (state.isLegal((init), state.BoatState(1, 1, 0, 0)))):
+    print("The condition doesn't have a solution.")
+    sys.exit()
+    
 while(len(open_list) != 0):
     current_state = open_list.pop(0)
     closed_list.append(current_state)
