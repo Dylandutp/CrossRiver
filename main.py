@@ -1,6 +1,7 @@
 import logging
 import os
 import state 
+import sys
 
 A = 2  # Capacity of BoatA
 B = 3  # Capacity of BoatB
@@ -227,6 +228,10 @@ if __name__ == '__main__':
     goal = state.State(0, 0, False, False)  # the last four elements 0 are not important
 
     open_list.append(init)
+    
+    if (not (state.isLegal((init), state.BoatState(1, 1, 0, 0)))):
+    print("The condition doesn't have a solution.")
+    sys.exit()
 
     while(len(open_list) != 0):
         current_state = open_list.pop(0)
