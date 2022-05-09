@@ -1,5 +1,5 @@
 M = 3  # Total number of Missionaries
-C = 3  # Total number of Cannibals
+C = 4  # Total number of Cannibals
 
 # State (Missionaries, Cannibals, BoatA, BoatB)
 class State:

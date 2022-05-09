@@ -230,8 +230,8 @@ if __name__ == '__main__':
     open_list.append(init)
     
     if (not (state.isLegal((init), state.BoatState(1, 1, 0, 0)))):
-    print("The condition doesn't have a solution.")
-    sys.exit()
+        print("The condition doesn't have a solution.")
+        sys.exit()
 
     while(len(open_list) != 0):
         current_state = open_list.pop(0)
